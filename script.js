@@ -4,7 +4,7 @@ document.getElementById('inputForm').addEventListener('submit', function(e) {
 
     // AJAX request to Python script
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'your_python_script.py', true);
+    xhr.open('POST', 'main.py', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
