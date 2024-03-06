@@ -1,126 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blackjack</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-    }
-    #game {
-        width: 400px;
-        margin: 0 auto;
-        text-align: center;
-    }
-    button {
-        margin-top: 10px;
-        padding: 5px 10px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Skript auf Webseite ausführen</title>
 </head>
 <body>
+    <form id="inputForm">
+        <label for="userInput">Input:</label>
+        <input type="text" id="userInput" name="userInput">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="output"></div>
 
-<div id="game">
-    <h1>Blackjack</h1>
-    <p>Your Hand: <span id="player-hand"></span></p>
-    <p>Dealer's Hand: <span id="dealer-hand"></span></p>
-    <p id="result"></p>
-    <button onclick="startGame()">Start Game</button>
-    <button onclick="hit()">Hit</button>
-    <button onclick="stand()">Stand</button>
-</div>
-
-<script>
-let deck = [];
-const suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'];
-const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-
-function createDeck() {
-    for (let suit of suits) {
-        for (let value of values) {
-            deck.push({value, suit});
-        }
-    }
-    shuffleDeck();
-}
-
-function shuffleDeck() {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-}
-
-function startGame() {
-    createDeck();
-    playerHand = [];
-    dealerHand = [];
-    dealCard(playerHand);
-    dealCard(playerHand);
-    dealCard(dealerHand);
-    dealCard(dealerHand);
-    renderHands();
-}
-
-function dealCard(hand) {
-    hand.push(deck.pop());
-}
-
-function renderHands() {
-    document.getElementById('player-hand').innerText = handValue(playerHand);
-    document.getElementById('dealer-hand').innerText = handValue(dealerHand);
-}
-
-function handValue(hand) {
-    let value = 0;
-    let hasAce = false;
-    for (let card of hand) {
-        if (card.value === 'A') {
-            hasAce = true;
-        }
-        value += cardValue(card.value);
-    }
-    if (hasAce && value + 10 <= 21) {
-        value += 10;
-    }
-    return value;
-}
-
-function cardValue(value) {
-    if (value === 'J' || value === 'Q' || value === 'K') {
-        return 10;
-    } else if (value === 'A') {
-        return 1;
-    } else {
-        return parseInt(value);
-    }
-}
-
-function hit() {
-    dealCard(playerHand);
-    renderHands();
-    if (handValue(playerHand) > 21) {
-        document.getElementById('result').innerText = 'You bust! Dealer wins.';
-    }
-}
-
-function stand() {
-    while (handValue(dealerHand) < 17) {
-        dealCard(dealerHand);
-        renderHands();
-    }
-    if (handValue(dealerHand) > 21 || handValue(dealerHand) < handValue(playerHand)) {
-        document.getElementById('result').innerText = 'You win!';
-    } else if (handValue(dealerHand) > handValue(playerHand)) {
-        document.getElementById('result').innerText = 'Dealer wins.';
-    } else {
-        document.getElementById('result').innerText = 'It\'s a tie!';
-    }
-}
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
