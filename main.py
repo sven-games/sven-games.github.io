@@ -1,12 +1,15 @@
-import sys
-import json
+from flask import Flask, request, jsonify
 
-# Read input from AJAX request
-data = json.loads(sys.stdin.read())
-user_input = data['input']
+app = Flask(__name__)
 
-# Process input and generate output
-output = f"You entered: {user_input}"
+@app.route('/runcode', methods=['POST'])
+def run_code():
+    code = request.json['code']
+    try:
+        output = str(eval(code))
+        return jsonify({'output': output})
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
-# Send output back to JavaScript
-print(json.dumps({'output': output}))
+if __name__ == '__main__':
+    app.run(debug=True)
